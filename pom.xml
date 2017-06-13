@@ -22,5 +22,6 @@
 
 	<modules>
 		<module>rabbitmq</module>
+		<module>spring</module>
 	</modules>
 </project>
