@@ -23,5 +23,6 @@
 	<modules>
 		<module>rabbitmq</module>
 		<module>spring</module>
+		<module>cache</module>
 	</modules>
 </project>
