@@ -12,7 +12,7 @@ import org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler
 import org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler.DefaultExceptionStrategy;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 
-public class AsyncConsumerWithException {
+public class AsyncConsumerWithErrorHandler {
 
     public static void main(String[] args) throws Exception {
         URI uri = new URI("amqp://guest:guest@localhost:5672");

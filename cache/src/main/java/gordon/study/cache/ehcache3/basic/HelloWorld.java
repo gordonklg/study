@@ -1,4 +1,4 @@
-package gordon.study.cache.ehcache.basic;
+package gordon.study.cache.ehcache3.basic;
 
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;

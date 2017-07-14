@@ -7,14 +7,20 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.4.RELEASE</version>
+	</parent>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -24,5 +30,9 @@
 		<module>rabbitmq</module>
 		<module>spring</module>
 		<module>cache</module>
+		<module>redis</module>
+		<module>springboot</module>
+		<module>bytecode</module>
+		<module>socket</module>
 	</modules>
 </project>
