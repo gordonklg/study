@@ -10,8 +10,6 @@
                            http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
                         ">
 
-    <context:component-scan base-package="gordon.study.rabbitmq.springamqp" />
-
     <rabbit:connection-factory id="connectionFactory" host="localhost" />
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"  />
@@ -20,4 +18,6 @@
         connection-factory="connectionFactory" acknowledge="auto">
         <rabbit:listener queue-names="spring" ref="commonPrintBean" method="printMessage"/>
     </rabbit:listener-container>
+
+    <bean id="commonPrintBean" class="gordon.study.rabbitmq.springamqp.CommonPrintBean" />
 </beans>

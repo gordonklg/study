@@ -34,5 +34,6 @@
 		<module>springboot</module>
 		<module>bytecode</module>
 		<module>socket</module>
+		<module>jvm</module>
 	</modules>
 </project>

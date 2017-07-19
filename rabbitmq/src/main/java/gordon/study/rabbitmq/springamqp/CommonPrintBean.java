@@ -1,9 +1,7 @@
 package gordon.study.rabbitmq.springamqp;
 
 import org.springframework.amqp.core.Message;
-import org.springframework.stereotype.Component;
 
-@Component
 public class CommonPrintBean {
 
     public void printMessage(Message message) {
