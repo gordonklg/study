@@ -8,16 +8,16 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import gordon.study.spring.common.Message;
+import gordon.study.spring.common.Employee;
 
-public class Test001_DefaultListableBeanFactory {
+public class IOC03_CircularReference {
 
     public static void main(String[] args) {
-        Resource resource = new ClassPathResource("ioc/test001.xml");
+        Resource resource = new ClassPathResource("ioc/ioc03.xml");
         BeanFactory factory = new DefaultListableBeanFactory();
         BeanDefinitionReader reader = new XmlBeanDefinitionReader((BeanDefinitionRegistry) factory);
         reader.loadBeanDefinitions(resource);
-        Message message = factory.getBean("message", Message.class);
-        System.out.println(message.getBody());
+        Employee chairman = factory.getBean("chairman", Employee.class);
+        System.out.println(chairman.getCompany().getName());
     }
 }

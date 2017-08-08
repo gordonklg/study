@@ -35,5 +35,6 @@
 		<module>bytecode</module>
 		<module>socket</module>
 		<module>jvm</module>
+		<module>java</module>
 	</modules>
 </project>

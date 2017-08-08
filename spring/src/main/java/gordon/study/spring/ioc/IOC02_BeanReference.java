@@ -10,10 +10,10 @@ import org.springframework.core.io.Resource;
 
 import gordon.study.spring.common.Employee;
 
-public class Test003_CircularReference {
+public class IOC02_BeanReference {
 
     public static void main(String[] args) {
-        Resource resource = new ClassPathResource("ioc/test003.xml");
+        Resource resource = new ClassPathResource("ioc/ioc02.xml");
         BeanFactory factory = new DefaultListableBeanFactory();
         BeanDefinitionReader reader = new XmlBeanDefinitionReader((BeanDefinitionRegistry) factory);
         reader.loadBeanDefinitions(resource);
