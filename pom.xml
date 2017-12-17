@@ -36,5 +36,6 @@
 		<module>socket</module>
 		<module>jvm</module>
 		<module>java</module>
-	</modules>
+        <module>algorithm</module>
+    </modules>
 </project>
