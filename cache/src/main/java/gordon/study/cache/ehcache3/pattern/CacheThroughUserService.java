@@ -64,6 +64,9 @@ public class CacheThroughUserService {
                     service.findUser("3");
                 }
             });
+//            executorService.execute(new Runnable() {
+//                public void run() { service.findUser("34"); } // in the same bucket with id=1, so it blocked.
+//            });
         }
         executorService.shutdown();
         executorService.awaitTermination(5, TimeUnit.HOURS);

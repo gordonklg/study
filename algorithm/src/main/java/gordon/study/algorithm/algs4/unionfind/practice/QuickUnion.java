@@ -20,7 +20,7 @@ public class QuickUnion {
         int pRoot = find(p);
         int qRoot = find(q);
         if (pRoot != qRoot) {
-            id[pRoot] = q;
+            id[pRoot] = qRoot;
             count--;
         }
     }

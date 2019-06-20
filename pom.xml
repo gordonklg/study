@@ -37,5 +37,9 @@
 		<module>jvm</module>
 		<module>java</module>
         <module>algorithm</module>
+		<module>kafka</module>
+        <module>rocketmq</module>
+        <module>misc</module>
+        <module>elastic</module>
     </modules>
 </project>

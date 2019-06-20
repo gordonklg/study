@@ -1,8 +1,8 @@
 package gordon.study.algorithm.algs4.unionfind.practice;
 
-import java.util.Scanner;
-
 import gordon.study.algorithm.algs4.unionfind.UF;
+
+import java.util.Scanner;
 
 public class UFTest {
 

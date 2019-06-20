@@ -36,14 +36,14 @@ public class CacheFeatures {
         for (int i = 1; i <= 10; i++) { // 超出数量上限，回收策略开始生效：key为1、2、3的条目不被回收
             myCache.put(i, "No. " + i);
         }
-        printAllCacheEntries(myCache);
-        
-        System.out.println("-------------------------------");
+        printAllCacheEntries(myCache); // contains 1,2,3 and other two keys
+        System.out.println();
+
         for (int i = 0; i < 3; i++) { // 等待3秒，3秒内一直没被使用的条目全部过期移除。只有key为1的条目还在。
             myCache.get(1);
             Thread.sleep(1050);
         }
-        printAllCacheEntries(myCache);
+        printAllCacheEntries(myCache); // only key=1 in cache
     }
 
     private static void printAllCacheEntries(Cache<Integer, String> cache) {
@@ -51,7 +51,7 @@ public class CacheFeatures {
 
             @Override
             public void accept(Cache.Entry<Integer, String> entry) {
-                System.out.println(entry.getKey());
+                System.out.print(entry.getKey() + " ");
             }
         });
     }
