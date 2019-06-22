@@ -1,0 +1,2 @@
+要使用Filter特性，需要在 broker.conf 中添加：
+enablePropertyFilter=true

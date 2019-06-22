@@ -1,0 +1,14 @@
+overall:
+https://www.baeldung.com/java-performance-mapping-frameworks
+
+orika:
+https://www.baeldung.com/orika-mapping
+https://orika-mapper.github.io/orika-docs/
+
+mapstruct:
+https://www.baeldung.com/mapstruct
+http://mapstruct.org/
+
+mapstruct with IDEA & Lombok has a story:
+https://stackoverflow.com/questions/47676369/mapstruct-and-lombok-not-working-together
+
