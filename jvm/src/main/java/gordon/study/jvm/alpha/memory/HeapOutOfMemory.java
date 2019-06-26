@@ -1,4 +1,4 @@
-package gordon.study.jvm.alpha.oom;
+package gordon.study.jvm.alpha.memory;
 
 import java.util.LinkedList;
 import java.util.List;
