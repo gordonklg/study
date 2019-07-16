@@ -1,21 +1,24 @@
 package gordon.study.snippet.beancopy.model;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 public class ModelA {
 
     private String name;
 
     private String age;
 
-    private Integer hp;
+    private String hp;
 
     private String date;
 
     private String time;
 
     private String unknown;
+
+    private String att;
 }

@@ -1,21 +1,23 @@
 package gordon.study.snippet.beancopy.model;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Builder
 public class ModelB {
 
     private String name;
 
     private Integer age;
 
-    private Double hp;
+    private double hp;
 
     private LocalDate date;
 
@@ -24,4 +26,6 @@ public class ModelB {
     private String etc;
 
     private List<ModelD> addresses;
+
+    private BigDecimal att;
 }

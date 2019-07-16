@@ -4,14 +4,13 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class ModelAA {
 
     private String name;
 
     private String age;
 
-    private Integer hp;
+    private String hp;
 
     private String date;
 

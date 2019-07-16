@@ -9,7 +9,7 @@ public class TestBeanCopier {
     public static void main(String[] args) {
 
         ModelB b = ModelUtil.giveMeB();
-        ModelBB bb = ModelBB.builder().build();
+        ModelBB bb = new ModelBB();
         final BeanCopier beanCopier = BeanCopier.create(ModelB.class, ModelBB.class, false);
         beanCopier.copy(b, bb, null);
         System.out.println(bb);

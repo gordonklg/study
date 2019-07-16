@@ -7,7 +7,7 @@ import ma.glasnost.orika.metadata.Type;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-public class OrikaConvertor1 extends BidirectionalConverter<String, LocalDate> {
+public class LocalDateOrikaConvertor extends BidirectionalConverter<String, LocalDate> {
 
     @Override
     public LocalDate convertTo(String s, Type<LocalDate> type, MappingContext mappingContext) {

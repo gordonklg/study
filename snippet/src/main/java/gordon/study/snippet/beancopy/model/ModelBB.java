@@ -8,14 +8,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Builder
 public class ModelBB {
 
     private String name;
 
     private Integer age;
 
-    private Double hp;
+    private double hp;
 
     private LocalDate date;
 
