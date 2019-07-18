@@ -1,0 +1,1335 @@
+{
+	"info": {
+		"name": "ElasticSearch官方文档",
+		"_postman_id": "a8f64d04-f991-017a-be18-d852f8870589",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Document APIs",
+			"description": "https://www.elastic.co/guide/en/elasticsearch/reference/6.7/docs.html",
+			"item": [
+				{
+					"name": "Automatic Index Creation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"persistent\": {\r\n        \"action.auto_create_index\": \"false\" \r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/_cluster/settings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cluster",
+								"settings"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Getting Started",
+			"description": "",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/_cat/health?v",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"health"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Nodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/_cat/nodes?v",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"nodes"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Indices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/_cat/indices?v",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"indices"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Index",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Document",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc/1?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Document",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc/1?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Index",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Replace Document",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"age\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc/1?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Document Auto ID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Document",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"doc\": { \"name\": \"Joe\", \"salary\": 12345 }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc/1/_update?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1",
+								"_update"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Document by script",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"script\" : \"ctx._source.salary += 11111\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc/1/_update?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1",
+								"_update"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Document",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9200/customer/_doc/1?pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Load Sample Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_doc/_bulk?pretty&refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_doc",
+								"_bulk"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								},
+								{
+									"key": "refresh",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search?q=*&sort=account_number:asc&pretty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "*",
+									"equals": true
+								},
+								{
+									"key": "sort",
+									"value": "account_number:asc",
+									"equals": true
+								},
+								{
+									"key": "pretty",
+									"value": "",
+									"equals": false
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": { \"match_all\": {} },\r\n  \"sort\": [\r\n    { \"account_number\": \"asc\" }\r\n  ],\r\n  \"from\": 10,\r\n  \"size\": 10\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query Match (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": { \"match\": { \"address\": \"mill lane\" } },\r\n  \"_source\": [\"account_number\", \"balance\"]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query Match Phrase (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": { \"match_phrase\": { \"address\": \"mill lane\" } }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query 2 (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": [\r\n        { \"match\": { \"address\": \"mill lane\"} },\r\n        { \"match\": { \"gender\": \"M\"} }\r\n      ],\r\n      \"must_not\": [\r\n        { \"match\": { \"state\": \"MD\" } }\r\n      ]\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query 3 (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"should\": [\r\n        { \"match\": { \"address\": \"mill lane\"} },\r\n        { \"match\": { \"gender\": \"M\"} }\r\n      ],\r\n      \"must_not\": [\r\n        { \"match\": { \"state\": \"MD\" } }\r\n      ]\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query 4 (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": [\r\n        { \"match\": { \"address\": \"mill lane\"} },\r\n        { \"match\": { \"gender\": \"M\"} },\r\n        { \"bool\": {\r\n            \"should\": [\r\n              { \"match\": { \"age\": 38} },\r\n              { \"match\": { \"age\": 28} }\r\n            ]\r\n          }\r\n        }\r\n      ],\r\n      \"must_not\": [\r\n        { \"match\": { \"state\": \"MD\" } }\r\n      ]\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query Range (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"range\": {\r\n      \"balance\": {\r\n        \"gte\": 20000,\r\n        \"lte\": 30000\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Query Filter (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": { \"match_all\": {} },\r\n      \"filter\": {\r\n        \"range\": {\r\n          \"balance\": {\r\n            \"gte\": 20000,\r\n            \"lte\": 30000\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Aggregations (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\": 0,\r\n  \"aggs\": {\r\n    \"group_by_state\": {\r\n      \"terms\": {\r\n        \"field\": \"state.keyword\"\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Aggregations 2 (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\": 0,\r\n  \"aggs\": {\r\n    \"group_by_state\": {\r\n      \"terms\": {\r\n        \"field\": \"state.keyword\",\r\n        \"order\": {\r\n          \"average_balance\": \"desc\"\r\n        }\r\n      },\r\n      \"aggs\": {\r\n        \"average_balance\": {\r\n          \"avg\": {\r\n            \"field\": \"balance\"\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sample Aggregations 3 (GET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\": 0,\r\n  \"aggs\": {\r\n    \"group_by_age\": {\r\n      \"range\": {\r\n        \"field\": \"age\",\r\n        \"ranges\": [\r\n          {\r\n            \"from\": 20,\r\n            \"to\": 30\r\n          },\r\n          {\r\n            \"from\": 30,\r\n            \"to\": 40\r\n          },\r\n          {\r\n            \"from\": 40,\r\n            \"to\": 50\r\n          }\r\n        ]\r\n      },\r\n      \"aggs\": {\r\n        \"group_by_gender\": {\r\n          \"terms\": {\r\n            \"field\": \"gender.keyword\"\r\n          },\r\n          \"aggs\": {\r\n            \"average_balance\": {\r\n              \"avg\": {\r\n                \"field\": \"balance\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9200/bank/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Indices APIs",
+			"description": "https://www.elastic.co/guide/en/elasticsearch/reference/6.7/indices.html",
+			"item": []
+		},
+		{
+			"name": "Create Index",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"settings\" : {\r\n        \"number_of_shards\" : 1,\r\n        \"number_of_replicas\" : 0\r\n    },\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"group_name\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"project_name\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"committer_email\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"committed_date\": {\r\n                \"type\": \"date\"\r\n            }\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/gitlab?include_type_name=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"gitlab"
+					],
+					"query": [
+						{
+							"key": "include_type_name",
+							"value": "false",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9200/gitlab?include_type_name=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"gitlab"
+					],
+					"query": [
+						{
+							"key": "include_type_name",
+							"value": "false",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Put Mapping",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"properties\": {\r\n        \"addition_line\": {\r\n            \"type\": \"integer\"\r\n        },\r\n        \"deletion_line\": {\r\n            \"type\": \"integer\"\r\n        },\r\n        \"total_line\": {\r\n            \"type\": \"integer\"\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/gitlab/_mapping/_doc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"gitlab",
+						"_mapping",
+						"_doc"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Gitlab Aggregation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"size\": 0,\r\n  \"aggs\": {\r\n    \"group_by_committer\": {\r\n      \"terms\": {\r\n        \"field\": \"committer_email\"\r\n      },\r\n      \"aggs\" : {\r\n        \"commit_over_time\" : {\r\n            \"date_histogram\" : {\r\n                \"field\" : \"committed_date\",\r\n                \"interval\" : \"month\"\r\n            },\r\n            \"aggs\": {\r\n              \"code_line\": {\r\n                \"sum\": {\r\n                  \"field\": \"total_line\"\r\n                }\r\n              }\r\n            }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/gitlab/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"gitlab",
+						"_search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp/employee/2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Jane\",\r\n    \"last_name\" :   \"Smith\",\r\n    \"age\" :         32,\r\n    \"about\" :       \"I like to collect rock albums\",\r\n    \"interests\":  [ \"music\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp/employee/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp",
+						"employee",
+						"2"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp/employee/3",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp/employee/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp",
+						"employee",
+						"3"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp/employee/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp/employee/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp",
+						"employee",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp/employee/_search",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp/employee/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp",
+						"employee",
+						"_search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp/employee/_search?q=last_name:Smith",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp/employee/_search?q=last_name:Smith",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp",
+						"employee",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "last_name:Smith",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp/employee/_search",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\" : {\r\n        \"bool\": {\r\n            \"must\": {\r\n                \"match\" : {\r\n                    \"last_name\" : \"smith\" \r\n                }\r\n            },\r\n            \"filter\": {\r\n                \"range\" : {\r\n                    \"age\" : { \"gt\" : 30 } \r\n                }\r\n            }\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp/employee/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp",
+						"employee",
+						"_search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/megacorp",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/megacorp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"megacorp"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9200/_cluster/health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\" :  \"Douglas\",\r\n    \"last_name\" :   \"Fir\",\r\n    \"age\" :         35,\r\n    \"about\":        \"I like to build cabinets\",\r\n    \"interests\":  [ \"forestry\" ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/_cluster/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cluster",
+						"health"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Index copy",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"settings\" : {\r\n        \"number_of_shards\" : 1,\r\n        \"number_of_replicas\" : 0\r\n    },\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"group_name\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"project_name\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"committer_email\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"committed_date\": {\r\n                \"type\": \"date\"\r\n            }\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/gitlab?include_type_name=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"gitlab"
+					],
+					"query": [
+						{
+							"key": "include_type_name",
+							"value": "false",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sample",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"size\": 0,\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"filter\": {\r\n        \"terms\": {\r\n          \"materialCode.keyword\" : [\"MAT1\", \"MAT2\"]\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"aggs\": {\r\n    \"group_by_mat\": {\r\n      \"terms\": {\r\n        \"field\": \"materialCode.keyword\"\r\n      },\r\n      \"aggs\": {\r\n        \"group_by_sku\": {\r\n          \"terms\": {\r\n            \"field\": \"sku.keyword\"\r\n          },\r\n          \"aggs\": {\r\n            \"min_price\": {\r\n              \"min\": {\r\n                \"field\": \"price\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:9200/test/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"test",
+						"_search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
