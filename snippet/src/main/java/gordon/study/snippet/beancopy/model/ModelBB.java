@@ -3,6 +3,7 @@ package gordon.study.snippet.beancopy.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,4 +24,9 @@ public class ModelBB {
     private String etc;
 
     private List<ModelDD> addresses;
+
+    private BigDecimal att;
+
+    private DefaultState state;
+
 }

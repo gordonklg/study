@@ -17,4 +17,8 @@ public class ModelAA {
     private String time;
 
     private String unknown;
+
+    private String att;
+
+    private String state;
 }

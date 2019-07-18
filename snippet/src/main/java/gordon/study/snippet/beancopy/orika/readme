@@ -1,0 +1,8 @@
+Enum
+   VALID, // name="VALID", ordinal=0
+   INVALID; //  name="INVALID", ordinal=1
+
+Orika默认支持枚举。
+Enum -> String 用的是 toString() 方法，默认返回 name。（所以如果你重写了Enum的 toString 方法，会出错）
+String -> Enum 用的是 Defult.valueOf() 方法。
+

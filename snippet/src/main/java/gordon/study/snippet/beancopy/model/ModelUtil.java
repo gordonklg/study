@@ -19,6 +19,7 @@ public class ModelUtil {
         b.setEtc("whatever");
         b.setAddresses(ModelUtil.giveMeDList());
         b.setAtt(new BigDecimal(new BigInteger("12345678901234567890123456789"), 14));
+        b.setState(DefaultState.VALID);
         return b;
     }
 

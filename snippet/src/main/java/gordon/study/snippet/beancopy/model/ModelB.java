@@ -28,4 +28,8 @@ public class ModelB {
     private List<ModelD> addresses;
 
     private BigDecimal att;
+
+    private DefaultState state;
+
+
 }

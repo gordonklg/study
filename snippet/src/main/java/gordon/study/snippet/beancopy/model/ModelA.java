@@ -21,4 +21,6 @@ public class ModelA {
     private String unknown;
 
     private String att;
+
+    private String state;
 }
