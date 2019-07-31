@@ -1,0 +1,16 @@
+默认的rebalancer是AllocateMessageQueueAveragely，将Queue平分给多个Consumer。
+显然，按照AllocateMessageQueueStrategy接口定义的方法：
+ List<MessageQueue> allocate(
+        final String consumerGroup,
+        final String currentCID,
+        final List<MessageQueue> mqAll,
+        final List<String> cidAll
+    );
+RocketMQ的DefaultMQPushConsumer只能在Queue的层面将消息分配给不同的Consumer。
+即：消费负载均衡的最小粒度是队列，Consumer的数量应不大于队列数！
+
+AllMessageQueueStrategy导致消息会被多次消费。
+
+疑问：每个Consumer有多个线程，它们是怎样协作处理多个Queue中的消息的？
+
+疑问：在rebalance时，会不会有些消息被重复消费？
