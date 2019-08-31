@@ -1,0 +1,5 @@
+堆空间 OutOfMemoryError，没啥好说的
+栈空间 StackOverflowError，没啥好说的
+线程的栈空间在堆外分配
+直接内存在堆外分配
+Metaspace在堆外分配

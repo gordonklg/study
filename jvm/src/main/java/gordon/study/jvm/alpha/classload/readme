@@ -1,0 +1,25 @@
+http://www.ityouknow.com/jvm/2017/08/19/class-loading-principle.html
+加载：获取字节流；转化为方法区的运行时数据结构；堆中生成Class实例，作为方法区中数据的访问入口。
+连接：
+  验证：确保被加载的类的正确性。可以跳过 -Xverifynone
+  准备：为类的静态变量分配内存（方法区），并将其初始化为默认值。例外是 static final 常量，会被初始化为 ConstantValue 属性所指定的值。
+  解析：把类中（常量池内）的符号引用转换为直接引用。
+初始化：为类的静态变量赋予正确的初始值。只有对类主动使用的时候才会导致类的初始化（反例：访问类的常量；ClassLoader.loadClass()；Class.forName() initialize参数值为false）。
+
+JVM初始化步骤
+1、假如这个类还没有被加载和连接，则程序先加载并连接该类（加载是从下往上的）
+2、假如该类的直接父类还没有被初始化，则先初始化其直接父类（初始化是从上往下的）
+3、假如类中有初始化语句，则系统依次执行这些初始化语句（静态语句块和类变量的赋值语句）
+
+启动类加载器：负责加载存放在JDK\jre\lib下，或被-Xbootclasspath参数指定的路径中的，并且能被虚拟机识别的类库（如rt.jar，所有的java.开头的类均被Bootstrap ClassLoader加载）。启动类加载器是无法被Java程序直接引用的。
+扩展类加载器：由sun.misc.Launcher$ExtClassLoader实现，负责加载JDK\jre\lib\ext目录中，或者由java.ext.dirs系统变量指定的路径中的所有类库（如javax.开头的类），开发者可以直接使用扩展类加载器。
+应用程序类加载器：由sun.misc.Launcher$AppClassLoader实现，负责加载用户类路径（ClassPath）所指定的类，开发者可以直接使用该类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+
+JVM类加载机制：
+  全盘负责，当一个类加载器负责加载某个Class时，该Class所依赖的和引用的其他Class也将由该类加载器负责载入，除非显式使用另外一个类加载器来载入
+  父类委托，先让父类加载器试图加载该类，只有在父类加载器无法加载该类时才尝试从自己的类路径中加载该类
+  缓存机制，缓存机制将会保证所有加载过的Class都会被缓存，当程序中需要使用某个Class时，类加载器先从缓存区寻找该Class，只有缓存区不存在，系统才会读取该类对应的二进制数据，并将其转换成Class对象，存入缓存区。
+
+
+https://mp.weixin.qq.com/s/HvElZRVf_iFAh24cwuFu-Q   FunnyStatic.java 类中静态变量是该类的实例。
+https://www.jianshu.com/p/e351c12d36f2   Alibaba.java 某年校招题，同上

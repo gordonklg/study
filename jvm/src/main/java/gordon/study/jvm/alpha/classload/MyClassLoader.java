@@ -45,7 +45,8 @@ public class MyClassLoader extends ClassLoader {
     public static void main(String[] args)  {
 
         MyClassLoader classLoader = new MyClassLoader();
-        URL url = MyClassLoader.class.getClassLoader().getResource("alpha/classload");
+        URL url = MyClassLoader.class.getResource("/alpha/classload");
+        // URL url = MyClassLoader.class.getClassLoader().getResource("alpha/classload");
         classLoader.setRoot(url.getPath());
 
         Class<?> testClass = null;

@@ -1,5 +1,6 @@
 package gordon.study.jvm.alpha.memory;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,13 +10,14 @@ import java.util.List;
 public class HeapOutOfMemory {
 
     public static void main(String[] args) {
-        List<Object> list = new LinkedList<>();
-        long count = 0;
-        while (true) {
-            if(++count % 10000 == 0) {
-                System.out.println(count);
-            }
-            list.add(new Object());
+        List<byte[]> list = new ArrayList<>();
+        for (int i = 0; i < 1024; i++) {
+            System.out.println(i);
+            list.add(new byte[1024 * 1024]);
         }
     }
 }
+
+/*
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+ */

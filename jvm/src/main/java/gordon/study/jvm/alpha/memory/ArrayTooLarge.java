@@ -18,3 +18,7 @@ public class ArrayTooLarge {
         System.out.println("Never sees me.");
     }
 }
+
+/*
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+ */

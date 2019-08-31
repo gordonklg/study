@@ -17,3 +17,7 @@ public class StackOverflow {
         infiniteRecursive(++a);
     }
 }
+
+/*
+Exception in thread "main" java.lang.StackOverflowError
+ */
