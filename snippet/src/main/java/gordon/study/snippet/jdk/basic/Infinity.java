@@ -12,5 +12,13 @@ public class Infinity {
         System.out.println(infinity == 2.0 / 0.0);
         System.out.println(nan < infinity);
         System.out.println(nan == nan);
+
+        System.out.println(infinity - 100);
+        System.out.println(infinity / 0.0);
+
+        System.out.println(-infinity);
+        System.out.println(-1.0 / 0.0);
+        System.out.println(1.0 / -0.0);
+        System.out.println(-infinity < infinity);
     }
 }
