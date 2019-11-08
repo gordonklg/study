@@ -1,0 +1,22 @@
+2019.11 扩充
+## ServerSocketTimeout
+服务器端一样可以设置读超时，超时抛出异常后关闭socket，服务器端连接状态是FIN_WAIT_2，客户端连接状态是CLOSE_WAIT。由于客户端socket一直不关闭，只能等待操作系统
+通过服务器端向客户端发送RST重置服务，强行关闭连接。
+
+## OnlyReadMethodCanTimeout
+我们知道，Java中只有读操作会超时，本实验证明超时计时是从 read 方法被调用开始的，业务处理时间不计入内。
+
+## SocketTimeoutIsOrdinaryException
+超时异常只是一个普通的异常，如果我们忽略该异常，并继续从输入流中读取字节，是可行的。
+理解成一个中断？
+超时并不会损坏底层的缓冲区、Java中的流。
+
+## ClientSocketTimeoutThenServerClose
+正确的写法是确保服务器端和客户端都能正确的关闭socket。最常见的写法是 catch 异常，并关闭 socket。
+
+## CloseByContract
+或者双方约定结束信号，或是总长度。
+
+## SendTooMuchAndClose
+研究OS层面的缓冲区。
+

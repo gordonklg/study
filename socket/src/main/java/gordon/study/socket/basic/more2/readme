@@ -1,0 +1,21 @@
+2019.11 扩充2
+
+## ClosedSocketReceivesDataWillSendRST
+已关闭的socket如果收到包含数据的包，会立刻发送 [RST, ACK] 包重置连接。
+RST包特点：发送缓冲区的包直接被丢弃，直接发送RST包；接收端收到RST包也不用发送ACK包确认。OS层面的socket完全终止了（netstat查不到）。
+
+## OsSendRSTWhenNoListeningPort
+OS的socket程序会在出现异常时发送 [RST, ACK] 包。例如，A向B发起连接，但B之上并未监听相应的端口，这时B的OS socket程序会发RST包。
+
+## 暂无
+（推测）进程关闭，Windows内核中为之服务的socket对象引用计数减为0，因此OS知道要回收资源，会主动发起 [RST, ACK] 包重置连接。
+
+## LingerOnAndValueZero
+当打开Linger且Linger值为0时，关闭socket会立即发送 RST 包，避免 TIME_WAIT 状态。但是发送缓冲区未发送数据会丢失。
+
+## LingerOnAndPositiveValue
+当打开Linger且Linger值大于0时，close方法变为阻塞方法，等待Linger指定的时间，如果所有数据包和FIN包都被ACK，则阻塞结束；若超时，强制发送 RST 包。
+
+## ClientProcessExit_Server/Client
+默认Linger关闭。当客户端发送完数据关闭连接（close方法非阻塞）后，JVM进程结束。这时，socket后续操作都交给了操作系统。
+
