@@ -1,0 +1,115 @@
+###### First of all
+Executor 读音是 [ɪɡˈzekjətər]
+
+###### JDK 线程池
+参考资料：
+https://www.jianshu.com/p/a166944f1e73 《Java线程池原理》
+
+
+
+## 源码分析
+线程池设计核心问题：
+- 线程池生命周期管理
+- 动态调节线程池中工作线程数量
+- 超过当前处理能力的任务如何处理（排队 & 拒绝策略）
+- 工作线程的复用
+
+## 生命周期管理
+用一个Integer同时表示线程池状态和总工作线程数。
+    private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0)); // 初始值为0
+    private static final int COUNT_BITS = Integer.SIZE - 3;  // 后29位表示总执行任务数
+    private static final int CAPACITY   = (1 << COUNT_BITS) - 1; // 最多可表示 00011...11(29个1) 个总任务
+
+    private static final int RUNNING    = -1 << COUNT_BITS; // 111 实际值最小，因为是负数
+    private static final int SHUTDOWN   =  0 << COUNT_BITS; // 000 就是0
+    private static final int STOP       =  1 << COUNT_BITS; // 001
+    private static final int TIDYING    =  2 << COUNT_BITS; // 010
+    private static final int TERMINATED =  3 << COUNT_BITS; // 011 实际值最大
+
+    private static int runStateOf(int c)     { return c & ~CAPACITY; } // 与 11100...00 与操作得到前3位
+    private static int workerCountOf(int c)  { return c & CAPACITY; } // 与 00011...11 与操作得到后29位
+    private static int ctlOf(int rs, int wc) { return rs | wc; } // 拼接成一个int
+
+## 线程池中工作线程数量
+    private volatile int corePoolSize;
+    private volatile int maximumPoolSize;
+
+
+## 排队
+    private final BlockingQueue<Runnable> workQueue;
+
+## 拒绝策略
+    private volatile RejectedExecutionHandler handler;
+
+## 线程复用
+用Worker类包装工作线程。
+
+    private final class Worker extends AbstractQueuedSynchronizer implements Runnable {
+        final Thread thread;
+
+        Worker(Runnable firstTask) {
+            setState(-1); // inhibit interrupts until runWorker
+            this.firstTask = firstTask;
+            this.thread = getThreadFactory().newThread(this);
+        }
+
+        public void run() {
+            runWorker(this);
+        }
+
+    }
+
+    final void runWorker(Worker w) {
+        Thread wt = Thread.currentThread();
+        Runnable task = w.firstTask;
+        w.firstTask = null;
+        w.unlock(); // allow interrupts
+        boolean completedAbruptly = true;
+        try {
+            while (task != null || (task = getTask()) != null) {
+                w.lock();
+                // If pool is stopping, ensure thread is interrupted;
+                // if not, ensure thread is not interrupted.  This
+                // requires a recheck in second case to deal with
+                // shutdownNow race while clearing interrupt
+                if ((runStateAtLeast(ctl.get(), STOP) ||
+                     (Thread.interrupted() &&
+                      runStateAtLeast(ctl.get(), STOP))) &&
+                    !wt.isInterrupted())
+                    wt.interrupt();
+                try {
+                    beforeExecute(wt, task);
+                    Throwable thrown = null;
+                    try {
+                        task.run();
+                    } catch (RuntimeException x) {
+                        thrown = x; throw x;
+                    } catch (Error x) {
+                        thrown = x; throw x;
+                    } catch (Throwable x) {
+                        thrown = x; throw new Error(x);
+                    } finally {
+                        afterExecute(task, thrown);
+                    }
+                } finally {
+                    task = null;
+                    w.completedTasks++;
+                    w.unlock();
+                }
+            }
+            completedAbruptly = false;
+        } finally {
+            processWorkerExit(w, completedAbruptly);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+https://www.infoq.cn/article/java-threadPool

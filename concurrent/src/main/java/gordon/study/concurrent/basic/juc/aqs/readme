@@ -1,0 +1,157 @@
+<https://segmentfault.com/a/1190000016058789>
+
+https://segmentfault.com/a/1190000015739343
+
+AQS（AbstractQueuedSynchronizer）是JAVA中众多锁以及并发工具的基础，其底层采用乐观锁，大量使用了CAS操作，并且在冲突时，采用自旋方式重试，
+以实现轻量级和高效地获取锁。
+AQS中实现了锁的获取框架，锁的实际获取逻辑交由子类去实现，就锁的获取操作而言，子类必须重写 tryAcquire方法。
+
+java并发工具设计套路三板斧：
+状态：一般是一个state属性，它基本是整个工具的核心，通常整个工具都是在设置和修改状态，很多方法的操作都依赖于当前状态是什么。由于状态是全局共享的，
+一般会被设置成volatile类型，以保证其修改的可见性；
+队列：队列通常是一个等待的集合，大多数以链表的形式实现。队列采用的是悲观锁的思想，表示当前所等待的资源，状态或者条件短时间内可能无法满足。因此，
+它会将当前线程包装成某种类型的数据结构，扔到一个等待队列中，当一定条件满足后，再从等待队列中取出。
+CAS: CAS操作是最轻量的并发处理，通常我们对于状态的修改都会用到CAS操作，因为状态可能被多个线程同时修改，CAS操作保证了同一个时刻，只有一个线程能
+修改成功，从而保证了线程安全，CAS操作基本是由Unsafe工具类的compareAndSwapXXX来实现的；CAS采用的是乐观锁的思想，因此常常伴随着自旋，如果发现
+当前无法成功地执行CAS，则不断重试，直到成功为止，自旋的的表现形式通常是一个死循环for(;;)。
+
+
+AQS核心实现 之 状态：
+在AQS中，状态是由state属性来表示的，不出所料，它是volatile类型的：
+  private volatile int state;
+该属性的值即表示了锁的状态，state为0表示锁没有被占用，state大于0表示当前已经有线程持有该锁。
+
+我们通过AbstractOwnableSynchronizer 的 exclusiveOwnerThread属性记录当前持有锁的线程：
+  private transient Thread exclusiveOwnerThread;
+（PS：AbstractQueuedSynchronizer extends AbstractOwnableSynchronizer）
+
+AQS核心实现 之 队列：
+AQS中，队列的实现是一个双向链表，被称为sync queue，它表示所有等待锁的线程的集合，有点类似于 synchronized 的 wait set。
+
+队列节点的主要结构：
+  // 节点所代表的线程
+  volatile Thread thread;
+  // 双向链表，每个节点需要保存自己的前驱节点和后继节点的引用
+  volatile Node prev;
+  volatile Node next;
+  // 线程所处的等待锁的状态，初始化时，该值为0
+  volatile int waitStatus;
+
+AQS 队列操作相关属性：
+  // 头结点，不代表任何线程，是一个哑结点
+  private transient volatile Node head;
+  // 尾节点，每一个请求锁的线程会加到队尾
+  private transient volatile Node tail;
+
+AQS核心实现 之 CAS：
+CAS操作主要针对5个属性，包括AQS的3个属性state,head和tail, 以及Node对象的两个属性waitStatus,next。说明这5个属性基本是会被多个线程同时访问的。
+
+AbstractQueuedSynchronizer:
+    public final void acquire(int arg) {
+        if (!tryAcquire(arg) &&
+            acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+            selfInterrupt();
+    }
+
+FairSync:
+        protected final boolean tryAcquire(int acquires) {
+            final Thread current = Thread.currentThread();
+            int c = getState();
+            if (c == 0) { // 当前线程有机会获取锁
+                if (!hasQueuedPredecessors() && // 判断没有优先级更高的线程（结点）需要获取锁
+                /*
+                    Node t = tail; // Read fields in reverse initialization order
+                    Node h = head;
+                    Node s;
+                    return h != t && // h==t要么都是null未初始化，要么只有Dummy结点队列为空，显然该返回false。
+                                        // 只要h!=t，则h不可能为null，且队列才有可能包含结点
+                        ((s = h.next) == null || s.thread != Thread.currentThread());
+                        // 简单情况下s指向队列首元素，如果s的线程不是当前线程，显然有线程排在前面
+                */
+                    compareAndSetState(0, acquires)) { // 返回true表示获得锁
+                    setExclusiveOwnerThread(current);
+                    return true;
+                }
+            }
+            else if (current == getExclusiveOwnerThread()) { // 锁已被占用的情况下，判断是否当前线程占用
+                int nextc = c + acquires;
+                if (nextc < 0)
+                    throw new Error("Maximum lock count exceeded");
+                setState(nextc); // 重入
+                return true;
+            }
+            return false;
+        }
+
+列举 sync queue 可能的状态：
+head=null,tail=null: 初始状态。sync queue 是延迟构建的。
+head=Dummy,tail=null：初始化sync queue，创建Dummy头结点。enq方法调用compareAndSetHead处理。非常短暂。
+head=Dummy,tail=head：初始化sync queue，实际队列为空。enq方法。
+head=Dummy,tail=一个包装过的未获得锁的线程
+
+
+
+
+AbstractQueuedSynchronizer:
+    private Node addWaiter(Node mode) {
+        Node node = new Node(Thread.currentThread(), mode);
+        // Try the fast path of enq; backup to full enq on failure
+        Node pred = tail;
+        if (pred != null) { // 即要求 sync queue 已初始化，否则交给 enq 方法初始化 sync queue
+            node.prev = pred;
+            if (compareAndSetTail(pred, node)) { // 成功将 node 设为新的队列尾结点。注意此时原尾结点的next还没有指向新尾结点！因此正向遍历队列是有问题的，逆向没问题。
+                pred.next = node;
+                return node;
+            }
+        }
+        enq(node); // 将node快速设为尾结点因为 sync queue 未初始化或竞争失败而失败，调用 enq 方法自旋加入队列
+        return node;
+    }
+    private Node enq(final Node node) { // 保证将节点入队
+        for (;;) { // 自旋
+            Node t = tail;
+            if (t == null) { // 未初始化，构造队列
+                if (compareAndSetHead(new Node()))
+                    tail = head;
+            } else { // 和 addWaiter 逻辑一样，将节点加入队列尾。
+                node.prev = t;
+                if (compareAndSetTail(t, node)) {
+                    t.next = node;
+                    return t;
+                }
+            }
+        }
+    }
+    final boolean acquireQueued(final Node node, int arg) {
+        boolean failed = true;
+        try {
+            boolean interrupted = false;
+            for (;;) {
+                final Node p = node.predecessor();
+                if (p == head && tryAcquire(arg)) { // 如果是首元素，再次尝试获取锁。因为前面成功enq后很可能自己就成了队首元素。
+                    setHead(node);
+                    p.next = null; // help GC
+                    failed = false;
+                    return interrupted;
+                }
+                if (shouldParkAfterFailedAcquire(p, node) &&
+                    parkAndCheckInterrupt())
+                    interrupted = true;
+            }
+        } finally {
+            if (failed)
+                cancelAcquire(node);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+

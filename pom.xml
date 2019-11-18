@@ -41,5 +41,6 @@
         <module>rocketmq</module>
         <module>misc</module>
         <module>elastic</module>
+        <module>concurrent</module>
     </modules>
 </project>
