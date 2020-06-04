@@ -1,4 +1,4 @@
-package gordon.study.algorithm.leetcode.array;
+package gordon.study.algorithm.leetcode;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package gordon.study.algorithm.leetcode.array;
+package gordon.study.algorithm.leetcode;
 
 public class Leet661ImageSmoother {
 
