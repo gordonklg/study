@@ -1,4 +1,4 @@
-package gordon.study.algorithm.algs4.bst;
+package gordon.study.algorithm.algs4.searchtree;
 
 /******************************************************************************
  *  Compilation:  javac BST.java
@@ -62,7 +62,7 @@ import java.util.NoSuchElementException;
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *  For other implementations, see {@link ST}, {@link BinarySearchST},
  *  {@link SequentialSearchST}, {@link RedBlackBST},
- *  {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
+ *  {link SeparateChainingHashST}, and {link LinearProbingHashST},
  *
  *  @author Robert Sedgewick
  *  @author Kevin Wayne

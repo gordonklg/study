@@ -1,0 +1,23 @@
+安装指导：
+https://github.com/RichardGong/PlayWithCompiler/blob/master/antlr_install.md
+https://github.com/antlr/antlr4/blob/master/doc/getting-started.md
+
+1. 下载jar文件（当前版本是antlr-4.8.0-complete.jar）
+2. 设置CLASSPATH环境变量
+CLASSPATH=.;C:\study\antlr\antlr-4.8.0-complete.jar;%CLASSPATH%
+3. 写bat脚本
+antlr.bat: java org.antlr.v4.Tool %*
+grun.bat: java org.antlr.v4.gui.TestRig %*
+4. 将脚本所在目录（放到了C:\study\antlr\bin）加到Path变量中
+5. 编译Antlr规则文件
+antlr Hello.g4
+-visitor：生成与visitor模式有关的类。
+-nolistener：不生成listener类。
+-package:指定生成的java类的package。
+6. 编译生成的java类
+javac Hello*.java
+7. 用生成的编译器来解析你写的程序
+$ grun Hello r -gui
+-gui参数告诉grun，用图形化的方式来显示生成的AST。否则，它会在终端用lisp的括号嵌套括号的方式显示。
+r参数是.g4文件中的一条语法规则，所生成的AST的根节点就是代表这个规则的节点。
+（Windows中EOF是Ctrl-Z）

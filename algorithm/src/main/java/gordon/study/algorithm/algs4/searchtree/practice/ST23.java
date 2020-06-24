@@ -1,8 +1,6 @@
-package gordon.study.algorithm.algs4.bst.practice;
+package gordon.study.algorithm.algs4.searchtree.practice;
 
 import edu.princeton.cs.algs4.StdRandom;
-
-import java.util.NoSuchElementException;
 
 public class ST23<Key extends Comparable<Key>, Value> {
 
@@ -10,22 +8,22 @@ public class ST23<Key extends Comparable<Key>, Value> {
 
     private class Node<Key extends Comparable<Key>, Value> {
         private DataNode<Key, Value>[] items;
-        private Node<Key, Value>[] children = new Node[4];
-        private int number;
+        private Node[] children;
+        private int itemCount;
 
         public Node(Key key, Value value) {
-            DataNode<Key, Value>[] dataNodes = new DataNode[3];
-            dataNodes[0] = new DataNode(key, value);
-            this.items = dataNodes;
-            this.number = 1;
+            this.items = new DataNode[2];
+            this.items[0] = new DataNode(key, value);
+            this.children = new Node[3];
+            this.itemCount = 1;
         }
 
-        public Node(DataNode dataNode) {
-            DataNode<Key, Value>[] dataNodes = new DataNode[3];
-            dataNodes[0] = dataNode;
-            this.items = dataNodes;
-            this.number = 1;
-        }
+//        public Node(DataNode dataNode) {
+//            DataNode<Key, Value>[] dataNodes = new DataNode[3];
+//            dataNodes[0] = dataNode;
+//            this.items = dataNodes;
+//            this.itemCount = 1;
+//        }
 
 //        public Node23(DataNode[] dataNodes, int size) {
 //            this.items = dataNodes;
@@ -37,14 +35,14 @@ public class ST23<Key extends Comparable<Key>, Value> {
         }
 
         public void insertDataNode(Key key, Value value) {
-            items[number++] = new DataNode(key, value);
+            items[itemCount++] = new DataNode(key, value);
         }
 
         public void displayNode(StringBuilder sb) {
             sb.append("[");
-            for (int i = 0; i < number; i++) {
+            for (int i = 0; i < itemCount; i++) {
                 sb.append(items[i].key);
-                if (i < number - 1) {
+                if (i < itemCount - 1) {
                     sb.append(" ");
                 }
             }
@@ -82,60 +80,72 @@ public class ST23<Key extends Comparable<Key>, Value> {
 //        return size() == 0;
 //    }
 //
-    public void put(Key key, Value value) {
-        if (value == null) {
-//            delete(key);
-            return;
+    public void put(Key key, Value val) {
+        if (key == null) {
+            throw new IllegalArgumentException();
         }
-        root = put(root, key, value);
+        root = put(root, key, val);
     }
 
-    private Node put(Node node, Key key, Value value) {
+    private Node put(Node node, Key key, Value val) {
         if (node == null) {
-            return new Node(key, value);
+            return new Node(key, val);
         }
-//        if (node.number >= 3) {
+//        if (node.itemCount >= 3) {
 //            return node;
 //        }
-        if (node.isLeaf()) {
-            for (int i = 0; i < node.number; i++) {
-                int cmp = key.compareTo((Key) node.items[i].key);
-                if (cmp < 0) {
-                    insertDataNode(node, i, key, value);
-                    break;
-                } else if (cmp == 0) {
-                    node.items[i].val = value;
-                    break;
-                } else if (cmp > 0 && i == node.number - 1) {
-                    insertDataNode(node, node.number, key, value);
-                    break;
-                }
+//        for (int i = 0; i < node.itemCount; i++) {
+//            int cmp = key.compareTo((Key) node.items[i].key);
+//            if (cmp < 0) {
+//                put(node.children[i], key, val);
+//                break;
+//            } else if (cmp == 0) {
+//                node.items[i].val = val;
+//                break;
+//            } else if (cmp > 0 && i == node.itemCount - 1) {
+//                put(node.children[i + 1], key, val);
+//                break;
+//            }
+//        }
+
+
+        if (node.itemCount == 1) { // a leaf 2-node
+            int cmp = key.compareTo((Key) node.items[0].key);
+            if (cmp < 0) {
+                node.items[1] = node.items[0];
+                node.items[0] = new DataNode(key, val);
+                node.itemCount = 2;
+            } else if (cmp > 0) {
+                node.items[1] = new DataNode(key, val);
+                node.itemCount = 2;
+            } else {
+                node.items[0].val = val;
             }
         } else {
-            for (int i = 0; i < node.number; i++) {
+            for (int i = 0; i < node.itemCount; i++) {
                 int cmp = key.compareTo((Key) node.items[i].key);
                 if (cmp < 0) {
-                    node.children[i] = put(node.children[i], key, value);
+                    node.children[i] = put(node.children[i], key, val);
                     break;
                 } else if (cmp == 0) {
-                    node.items[i].val = value;
+                    node.items[i].val = val;
                     break;
-                } else if (cmp > 0 && i == node.number - 1) {
-                    node.children[i + 1] = put(node.children[i + 1], key, value);
+                } else if (cmp > 0 && i == node.itemCount - 1) {
+                    node.children[i + 1] = put(node.children[i + 1], key, val);
                     break;
                 }
             }
         }
 
-        if (node.number == 3) {
-            Node parent = new Node(node.items[1]);
-            Node left = new Node(node.items[0]);
-            Node right = new Node(node.items[2]);
-            parent.children[0] = left;
-            parent.children[1] = right;
-            return parent;
-        }
-//        if (node.number == 1) {
+//        if (node.itemCount == 3) {
+//            Node parent = new Node(node.items[1]);
+//            Node left = new Node(node.items[0]);
+//            Node right = new Node(node.items[2]);
+//            parent.children[0] = left;
+//            parent.children[1] = right;
+//            return parent;
+//        }
+//        if (node.itemCount == 1) {
 //            int cmp = key.compareTo((Key) node.items[0].key);
 //            if (cmp == 0) {
 //                node.items[0].val = value;
@@ -162,11 +172,11 @@ public class ST23<Key extends Comparable<Key>, Value> {
     }
 
     private void insertDataNode(Node node, int pos, Key key, Value value) {
-        for (int i = node.number; i > pos; i--) {
+        for (int i = node.itemCount; i > pos; i--) {
             node.items[i] = node.items[i - 1];
         }
         node.items[pos] = new DataNode(key, value);
-        node.number++;
+        node.itemCount++;
     }
 
     public void displayTree() {
@@ -179,7 +189,7 @@ public class ST23<Key extends Comparable<Key>, Value> {
     private void fineDisplay(StringBuilder sb, Node node, int level, int childNum) {
         sb.append("(").append(level).append(")");
         node.displayNode(sb);
-        for (int i = 0; i < node.number + 1; i++) {
+        for (int i = 0; i < node.itemCount + 1; i++) {
             Node child = node.children[i];
             if (child != null) {
                 sb.append("\n");

@@ -39,8 +39,8 @@
         <module>algorithm</module>
 		<module>kafka</module>
         <module>rocketmq</module>
-        <module>misc</module>
         <module>elastic</module>
         <module>concurrent</module>
+        <module>simple</module>
     </modules>
 </project>
