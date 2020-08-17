@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="gordon.study.spring.geekbang.u04bean.domain.User">
+        <property name="id" value="1"/>
+        <property name="name" value="小马哥"/>
+    </bean>
+
+    <!-- 将 Spring 容器中 "user" Bean 关联/建立别名 - "xiaomage-user" -->
+    <alias name="user" alias="xiaomage-user" />
+
+</beans>
