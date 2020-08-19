@@ -12,15 +12,15 @@ import org.antlr.v4.runtime.TokenStream;
 
 public class ExtractInterfaceListener extends JavaBaseListener {
 
-    private boolean inClassDeclaration = false;
-
     JavaParser parser;
 
     public ExtractInterfaceListener(JavaParser parser) {
         this.parser = parser;
     }
 
-    /** Listen to matches of classDeclaration */
+    /**
+     * Listen to matches of classDeclaration
+     */
     @Override
     public void enterClassDeclaration(JavaParser.ClassDeclarationContext ctx) {
         System.out.println("interface I" + ctx.Identifier() + " {");
@@ -31,10 +31,11 @@ public class ExtractInterfaceListener extends JavaBaseListener {
         System.out.println("}");
     }
 
-    /** Listen to matches of methodDeclaration */
+    /**
+     * Listen to matches of methodDeclaration
+     */
     @Override
     public void enterMethodDeclaration(JavaParser.MethodDeclarationContext ctx) {
-        inClassDeclaration = true;
         // need parser to get tokens
         TokenStream tokens = parser.getTokenStream();
         String type = "void";
@@ -43,15 +44,5 @@ public class ExtractInterfaceListener extends JavaBaseListener {
         }
         String args = tokens.getText(ctx.formalParameters());
         System.out.println("\t" + type + " " + ctx.Identifier() + args + ";");
-    }
-
-    @Override
-    public void exitMethodDeclaration(JavaParser.MethodDeclarationContext ctx) {
-        inClassDeclaration = false;
-    }
-
-    @Override
-    public void enterEveryRule(ParserRuleContext ctx) {
-        System.out.println(ctx.getText());
     }
 }

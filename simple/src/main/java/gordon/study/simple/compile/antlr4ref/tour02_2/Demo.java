@@ -1,4 +1,6 @@
-package gordon.study.simple.compile.antlr4ref.tour02_2; /***
+package gordon.study.simple.compile.antlr4ref.tour02_2;
+
+/***
  * Excerpted from "The Definitive ANTLR 4 Reference",
  * published by The Pragmatic Bookshelf.
  * Copyrights apply to this code. It may not be used to create training material, 
@@ -18,7 +20,7 @@ public class Demo {
     }
 
     // test
-    int[] g(/*no args*/) {
+    private int[] g(/*no args*/) {
         return null;
     }
 
@@ -27,7 +29,7 @@ public class Demo {
      * @return
      */
     // test
-    List<Map<String, Integer>>[] h() {
+    public List<Map<String, Integer>>[] h() {
         return null;
     }
 }
