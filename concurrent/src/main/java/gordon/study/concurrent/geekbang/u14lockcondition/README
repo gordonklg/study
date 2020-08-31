@@ -1,0 +1,56 @@
+Java SDK 并发包通过 Lock 和 Condition 两个接口来实现管程，其中 Lock 用于解决互斥问题，Condition 用于解决同步问题。
+
+## 再造管程的理由
+- 能够响应中断
+- 支持超时
+- 非阻塞地获取锁
+- 实现管程模型里面的条件变量
+
+Lock使用范例：在 finally 里面释放锁（参考 LockSample.java）（反例 MissUnlock.java）
+
+## 如何保证可见性
+利用了 volatile 相关的 Happens-Before 规则。Java SDK 里面的 ReentrantLock，内部持有一个 volatile 的成员变量 state，获取锁的时候，会读写 state 的值；
+解锁的时候，也会读写 state 的值（简化后的代码如下面所示）。也就是说，在执行 value+=1 之前，程序先读写了一次 volatile 变量 state，在执行 value+=1 之后，
+又读写了一次 volatile 变量 state。根据相关的 Happens-Before 规则：
+- 顺序性规则：对于线程 T1，value+=1 Happens-Before 释放锁的操作 unlock()；
+- volatile 变量规则：由于 state = 1 会先读取 state，所以线程 T1 的 unlock() 操作 Happens-Before 线程 T2 的 lock() 操作；
+- 传递性规则：线程 T1 的 value+=1 Happens-Before 线程 T2 的 lock() 操作。
+
+```
+class SampleLock {
+  volatile int state;
+  // 加锁
+  lock() {
+    // 省略代码无数
+    state = 1;
+  }
+  // 解锁
+  unlock() {
+    // 省略代码无数
+    state = 0;
+  }
+}
+```
+
+## 什么是可重入锁
+线程可以重复获取同一把锁。（参考 ReentrantTest.java）
+
+## 公平锁与非公平锁
+（参考 FairLockTest.java 【非公平锁输出也是有序的，why？】）
+
+## 用锁的最佳实践
+- 永远只在更新对象的成员变量时加锁
+- 永远只在访问可变的成员变量时加锁
+- 永远不在调用其他对象的方法时加锁
+
+## Condition 实现了管程模型里面的条件变量
+（参考 BlockedQueue.java）
+
+## 同步与异步
+调用方是否需要等待结果，如果需要等待结果，就是同步；如果不需要等待结果，就是异步。
+
+如果你想让你的程序支持异步，可以通过下面两种方式来实现：
+- 调用方创建一个子线程，在子线程中执行方法调用，这种调用我们称为异步调用；
+- 方法实现的时候，创建一个新的线程执行主要逻辑，主线程直接 return，这种方法我们一般称为异步方法。
+
+

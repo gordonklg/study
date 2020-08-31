@@ -1,7 +1,7 @@
 <https://segmentfault.com/a/1190000016058789>
 
 https://segmentfault.com/a/1190000015739343
-
+https://segmentfault.com/a/1190000016058789
 AQS（AbstractQueuedSynchronizer）是JAVA中众多锁以及并发工具的基础，其底层采用乐观锁，大量使用了CAS操作，并且在冲突时，采用自旋方式重试，
 以实现轻量级和高效地获取锁。
 AQS中实现了锁的获取框架，锁的实际获取逻辑交由子类去实现，就锁的获取操作而言，子类必须重写 tryAcquire方法。

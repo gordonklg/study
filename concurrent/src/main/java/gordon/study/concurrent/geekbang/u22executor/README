@@ -1,0 +1,60 @@
+线程是一个重量级的对象，应该避免频繁创建和销毁。（需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源）
+
+## 池化资源的一般设计方法
+一般情况下，池化资源，都是当你需要资源的时候调用 acquire() 方法来申请资源，用完之后调用 release() 释放资源。
+```
+class XXXPool{
+  // 获取池化资源
+  XXX acquire() {
+  }
+  // 释放池化资源
+  void release(XXX x){
+  }
+}
+```
+
+扩展：例如Hikari数据库连接池
+```
+class HikariPool {
+    // Get a (proxy) connection from the pool
+    Connection getConnection() {}
+    // Release this entry back to the pool (invoked by the proxy connection's close method)
+    void recycle(PoolEntry /*contains a connection*/ poolEntry) {}
+}
+```
+
+## 线程池是一种生产者 - 消费者模式
+为什么线程池没有采用一般意义上池化资源的设计方法呢？因为 Thread 对象没有类似 execute(Runnable target) 这样的公共方法。
+就算获得了一个 Thread 对象，也没办法执行业务逻辑。
+目前业界线程池的设计，普遍采用的都是生产者 - 消费者模式。线程池的使用方是生产者，线程池本身是消费者。
+（参考 MyThreadPool.java）
+
+## 如何使用 Java 中的线程池
+（参考 ThreadPoolExecutorSample.java）
+
+## 使用线程池要注意些什么
+不建议使用 Executors 的最重要的原因是：Executors 提供的很多方法默认使用的都是无界的 LinkedBlockingQueue，高负载情境下，
+无界队列很容易导致 OOM，而 OOM 会导致所有请求都无法处理，这是致命问题。所以强烈建议使用有界队列。
+
+线程池默认的拒绝策略会 throw RejectedExecutionException 这是个运行时异常，很容易忽略。
+如果线程池处理的任务非常重要，建议自定义自己的拒绝策略；并且在实际工作中，自定义的拒绝策略往往和降级策略配合使用。
+
+要注意异常处理的问题，例如通过 ThreadPoolExecutor 对象的 execute() 方法提交任务时，如果任务在执行的过程中出现运行时异常，
+会导致执行任务的线程终止；不过，最致命的是任务虽然异常了，但是你却获取不到任何通知，这会让你误以为任务都执行得很正常。
+虽然线程池提供了很多用于异常处理的方法，但是最稳妥和简单的方案还是捕获所有异常并按需处理，你可以参考下面的示例代码：
+```
+try {
+  //业务逻辑
+} catch (RuntimeException x) {
+  //按需处理
+} catch (Throwable x) {
+  //按需处理
+}
+```
+
+## 扩展
+《Java 并发编程实战》的第7章《取消与关闭》的7.3节“处理非正常的线程终止”
+
+## 课后思考
+有哪些办法可以给线程池里的线程指定名字？
+（参考 NamedThreadTest.java）

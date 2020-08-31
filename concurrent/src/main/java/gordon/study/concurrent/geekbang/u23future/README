@@ -1,0 +1,24 @@
+## 如何获取任务执行结果
+Future 接口
+```
+// 提交Runnable任务
+Future<?> submit(Runnable task);
+// 提交Callable任务
+<T> Future<T> submit(Callable<T> task);
+// 提交Runnable任务及结果引用
+<T> Future<T> submit(Runnable task, T result);
+```
+
+FutureTask 实现了 Runnable 和 Future 接口，由于实现了 Runnable 接口，所以可以将 FutureTask 对象作为任务提交给
+ThreadPoolExecutor 去执行；又因为实现了 Future 接口，所以也能用来获得任务的执行结果。利用 FutureTask 对象可以很容易获取
+子线程的执行结果。（参考 FutureTaskSample.java）
+
+## 实现最优的“烧水泡茶”程序
+（参考 MakeTea.java）
+
+## 总结
+利用多线程可以快速将一些串行的任务并行化，从而提高性能；如果任务之间有依赖关系，比如当前任务依赖前一个任务的执行结果，
+这种问题基本上都可以用 Future 来解决。
+
+## 课后思考
+（参考 Parallelize.java）
