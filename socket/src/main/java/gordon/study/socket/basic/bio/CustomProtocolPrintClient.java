@@ -1,4 +1,4 @@
-package gordon.study.socket.basic;
+package gordon.study.socket.basic.bio;
 
 import java.io.DataOutputStream;
 import java.net.InetSocketAddress;

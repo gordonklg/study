@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
-import gordon.study.socket.basic.LineSeparateEchoClient;
+import gordon.study.socket.basic.bio.LineSeparateEchoClient;
 
 public class LineSeparateBlockingEchoServer {
 

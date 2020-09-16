@@ -41,4 +41,7 @@ public class OnlyReadMethodCanTimeout {
 /*
 也就是说，如果服务器端read一部分数据，然后很慢的处理，处理完再read一部分数据（客户端发送数据足够快），则并不会超时。
 见 OnlyReadMethodCanTimeout2
+
+2020.6 查看SocketInputStream的read方法最终调用了native方法socketRead0，timeout是一个参数。Linux内核据说是用SO_RCVTIMEO
+这个socket option来设置read timeout。说白了，SO_TIMEOUT本来就是read方法的超时设置项。
  */

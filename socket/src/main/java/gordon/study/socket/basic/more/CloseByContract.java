@@ -21,6 +21,7 @@ public class CloseByContract {
                     Thread.sleep(1000);
                     char c = (char) is.read(); // 因为sleep了一秒，这时候已经在CLOSE_WAIT状态，但是依然能获取数据。是因为底层有缓冲区吗？
                     System.out.println(c + " : " + socket.isClosed()); // 注意，CLOSE_WAIT是OS层面连接状态，Java中这个socket可没有关闭！
+                    // 2020.6 CLOSE_WAIT本来就不是关闭状态，只是收到对方的关闭请求。
                     if (c == '\0') {
                         break;
                     }

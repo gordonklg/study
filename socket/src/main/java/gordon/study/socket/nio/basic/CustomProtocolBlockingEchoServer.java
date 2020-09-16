@@ -1,13 +1,11 @@
 package gordon.study.socket.nio.basic;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
-import gordon.study.socket.basic.LineSeparateEchoClient;
+import gordon.study.socket.basic.bio.LineSeparateEchoClient;
 
 public class CustomProtocolBlockingEchoServer {
 
