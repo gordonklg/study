@@ -32,14 +32,13 @@
 		<module>cache</module>
 		<module>redis</module>
 		<module>springboot</module>
-		<module>bytecode</module>
 		<module>socket</module>
 		<module>jvm</module>
 		<module>snippet</module>
         <module>algorithm</module>
-		<module>kafka</module>
+		<module>mq</module>
         <module>rocketmq</module>
-        <module>elastic</module>
+        <module>informationretrieval</module>
         <module>concurrent</module>
         <module>simple</module>
     </modules>
