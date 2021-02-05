@@ -37,7 +37,6 @@
 		<module>snippet</module>
         <module>algorithm</module>
 		<module>mq</module>
-        <module>rocketmq</module>
         <module>informationretrieval</module>
         <module>concurrent</module>
         <module>simple</module>

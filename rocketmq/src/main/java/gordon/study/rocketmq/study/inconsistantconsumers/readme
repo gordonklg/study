@@ -1,8 +1,0 @@
-https://blog.csdn.net/Dome_/article/details/94584498
-
-同一个消费组，必须保持订阅关系一致！
-
-同一个消费组中，设置不同tag时，后启动的消费者会覆盖先启动的消费者设置的tag。
-tag决定了消息过滤的条件，经过服务端和客户端两层过滤，最后只有后启动的消费者才能收到部分消息。
-补充：DefaultMQPushConsumer默认的负载均衡策略为AllocateMessageQueueAveragely，多个Consumer平分Queue。tag过滤是在broker中自动完成的，
-被过滤的消息没机会到客户端。因此，大约只有1/4消息被消费（一半的TA或TB类型消息）。

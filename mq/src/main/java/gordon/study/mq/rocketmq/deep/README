@@ -1,0 +1,10 @@
+日志文件位置：
+C:\Users\KongLG\logs\rocketmqlogs
+存储文件位置：
+C:\Users\KongLG\store
+
+A. 开发环境
+（因为已经配了ROCKETMQ_HOME环境变量），可直接启动 NamesrvStartup
+启动BrokerStartup 需要指定 program arguments：-n 127.0.0.1:9876 -c C:\\study\\rocketmq\\rocketmq-all-4.3.2-bin-release\\conf\\broker.conf
+
+https://www.bilibili.com/video/BV1fE411V7Ho?from=search&seid=10097333987381741864

@@ -1,0 +1,4 @@
+consumer要设置实例名（setInstanceName），否则默认是DEFAULT，消费行为会让人迷惑。
+
+多个consumer group可以按照不同的消息模式（message mode）（clustering or broadcasting）消费同一个主题。
+

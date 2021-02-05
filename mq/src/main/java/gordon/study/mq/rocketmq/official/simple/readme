@@ -1,0 +1,8 @@
+DefaultMQPushConsumer消费了消息后，消息仍然存在。服务器端记录了该消费者组在Topic/MessageQueue中的消息offset，
+因此重新启动DefaultMQPushConsumer或者启动多个DefaultMQPushConsumer不会导致重新消费。
+
+每个消费者组都会从头开始消费消息。（update：这是Consumer默认行为，受ConsumeFromWhere影响）
+
+消息保存多久？
+
+同组的多个消费者会自动平衡分配消费队列。

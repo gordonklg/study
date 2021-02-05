@@ -1,0 +1,16 @@
+https://www.cnblogs.com/huangying2124/p/11702761.html
+
+1. 先往 RMQ_SYS_TRANS_HALF_TOPIC 写一个 prepare 消息；
+2. 通过 producer 的 TransactionListener executeLocalTransaction 回调方法执行本地事务，确认 prepare 消息提交还是回滚；
+3. 如果提交，会在目标 Topic 创建新消息；如果回滚，则不会（但是RMQ_SYS_TRANS_HALF_TOPIC队列的消息一直都在，且看不出状态）。以上，事务都算正常结束
+以上可试 CommitOne.java 和 RollbackOne.java
+
+4. 如果一直没收到确认，broker 会回调 checkLocalTransaction 方法（第一次是25秒左右，之后间隔一分钟，重复次数好像有上限）。
+可试 LongCommitOne.java
+
+回复 UNKNOW，broker 会继续重试。
+感觉流程是 broker 先在 RMQ_SYS_TRANS_HALF_TOPIC 创建一条新的消息，然后再去找生产者去调回调接口，就算系统没有对应生产者，也会发生重试的。
+因此，太长时间生产者down掉，系统事务一致性可能有问题。
+不同生产者组不互通，可试 AnotherProducer.java
+
+疑问：4.3.2版本，没有找到博客里提到的 RMQ_SYS_TRANS_OP_HALF_TOPIC。
