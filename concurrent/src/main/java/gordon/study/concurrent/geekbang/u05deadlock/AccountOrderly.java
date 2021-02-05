@@ -4,7 +4,7 @@ public class AccountOrderly {
 
     private int id;
 
-    private volatile int balance;
+    private int balance;
 
     public AccountOrderly(int id, int initBalance) {
         this.id = id;

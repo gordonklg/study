@@ -2,7 +2,7 @@ package gordon.study.concurrent.geekbang.u05deadlock;
 
 public class AccountDeadlock {
 
-    private volatile int balance;
+    private int balance;
 
     public AccountDeadlock(int initBalance) {
         this.balance = initBalance;

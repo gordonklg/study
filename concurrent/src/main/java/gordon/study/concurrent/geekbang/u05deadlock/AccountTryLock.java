@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class AccountTryLock {
 
-    private volatile int balance;
+    private int balance;
 
     private final Lock lock = new ReentrantLock();
 

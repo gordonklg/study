@@ -1,0 +1,41 @@
+通用线程“五态模型”：
+- 初始状态：指的是线程已经被创建，但是还不允许分配 CPU 执行。这个状态属于编程语言特有的，不过这里所谓的被创建，仅仅是在编程语言层面被创建，而在操作系统层面，真正的线程还没有创建。
+- 可运行状态：指的是线程可以分配 CPU 执行。在这种状态下，真正的操作系统线程已经被成功创建了，所以可以分配 CPU 执行。
+- 运行状态：当有空闲的 CPU 时，操作系统会将其分配给一个处于可运行状态的线程，被分配到 CPU 的线程的状态就转换成了运行状态。
+- 休眠状态：运行状态的线程如果调用一个阻塞的 API（例如以阻塞方式读文件）或者等待某个事件（例如条件变量），那么线程的状态就会转换到休眠状态，同时释放 CPU 使用权，休眠状态的线程永远没有机会获得 CPU 使用权。当等待的事件出现了，线程就会从休眠状态转换到可运行状态。
+- 终止状态：线程执行完或者出现异常就会进入终止状态，终止状态的线程不会切换到其他任何状态，进入终止状态也就意味着线程的生命周期结束了。
+
+
+Java线程共有六种状态，分别是：
+- NEW（初始化状态）
+- RUNNABLE（可运行 / 运行状态）
+- BLOCKED（阻塞状态）
+- WAITING（无时限等待）
+- TIMED_WAITING（有时限等待）
+- TERMINATED（终止状态）
+
+在操作系统层面，Java 线程中的 BLOCKED、WAITING、TIMED_WAITING 是一种状态，即前面我们提到的休眠状态。也就是说只要 Java 线程处于这三种状态之一，那么这个线程就永远没有 CPU 的使用权。
+
+线程调用阻塞式 API 时，不会转换到 BLOCKED 状态！在操作系统层面，线程是会转换到休眠状态的，但是在 JVM 层面，Java 线程的状态不会发生变化，也就是说 Java 线程的状态会依然保持 RUNNABLE 状态。
+JVM 层面并不关心操作系统调度相关的状态，因为在 JVM 看来，等待 CPU 使用权（操作系统层面此时处于可执行状态）与等待 I/O（操作系统层面此时处于休眠状态）没有区别，都是在等待某个资源，所以都归入了 RUNNABLE 状态。
+而我们平时所谓的 Java 在调用阻塞式 API 时，线程会阻塞，指的是操作系统线程的状态，并不是 Java 线程的状态。
+
+1. RUNNABLE 与 BLOCKED 的状态转换触发场景
+- 线程等待/获得 synchronized 的隐式锁。
+
+2. RUNNABLE 与 WAITING 的状态转换触发场景
+- 获得 synchronized 隐式锁的线程，调用无参数的 Object.wait() 方法。【被 Object.notify() 或 Object.notifyAll() 唤醒是先变为 BLOCKED，参考 ThreadStateTest.java】
+- 调用无参数的 Thread.join() 方法。【本质上就是 someThread.wait()】
+- 调用 LockSupport.park() 方法；调用 LockSupport.unpark(Thread thread)
+
+3. RUNNABLE 与 TIMED_WAITING 的状态转换触发场景
+- 调用带超时参数的 Thread.sleep(long millis) 方法
+- 获得 synchronized 隐式锁的线程，调用带超时参数的 Object.wait(long timeout) 方法
+- 调用带超时参数的 Thread.join(long millis) 方法
+- 调用带超时参数的 LockSupport.parkNanos(Object blocker, long deadline) 方法
+- 调用带超时参数的 LockSupport.parkUntil(long deadline) 方法
+
+
+
+
+

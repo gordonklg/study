@@ -4,7 +4,7 @@ public class ManagedAccount {
 
     private static final AccountAllocator alloctor = new AccountAllocator();
 
-    private volatile int balance;
+    private int balance;
 
     public ManagedAccount(int initBalance) {
         this.balance = initBalance;
@@ -14,13 +14,9 @@ public class ManagedAccount {
     private void transfer(ManagedAccount target, int amt) {
         alloctor.apply(this, target);
         try {
-            synchronized (this) { // 这边的锁还是要加的
-                synchronized (target) {
-                    if (this.balance > amt) {
-                        this.balance -= amt;
-                        target.balance += amt;
-                    }
-                }
+            if (this.balance > amt) {
+                this.balance -= amt;
+                target.balance += amt;
             }
         } finally {
             alloctor.free(this, target);

@@ -22,7 +22,7 @@
 
 ## 保护有关联关系的多个资源
 要确保锁能覆盖所有受保护资源。
-（参考 AccountError.java，this 锁只能保护自己的账号，保护不了别人的）
+（参考 AccountWrong.java，this 锁只能保护自己的账号，保护不了别人的）
 （参考 Account.java，Account.class 锁能保护所有账号，但是转账操作变串行了，毫无效率）
 
 

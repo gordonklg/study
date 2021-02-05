@@ -2,7 +2,7 @@ package gordon.study.concurrent.geekbang.u03lock;
 
 public class AccountWrong {
 
-    private volatile int balance;
+    private int balance;
 
     public AccountWrong(int initBalance) {
         this.balance = initBalance;
